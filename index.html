@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Applicant Dashboard – Deshani Scholars School</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<!-- Topbar -->
+<div class="topbar">
+  <div class="logo">
+    <img src="/assets/logodeshani.png" alt="Logo">
+    <span>Deshani Scholars School</span>
+  </div>
+  <div class="right">
+    <span id="topbarName" class="small">Student Profile</span>
+    <img id="topbarAvatar" class="avatar" src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Avatar" onclick="toggleProfile()">
+  </div>
+</div>
+
+<!-- Right Profile Sidebar -->
+<div id="profileSidebar" class="profile-sidebar">
+  <i class="fas fa-times close-btn" onclick="toggleProfile()"></i>
+  <div class="avatar">
+    <img id="profileAvatar" src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="User Avatar">
+        
+  </div>
+  <a href="#" onclick="goToStep(1)"  style="color: #8b0000;"><i class="fas fa-user-edit" style="color: #8b0000;"></i> Edit Profile</a>
+  <h3 id="profileName"></h3>
+  <div class="profile-kv">
+    <p><strong>Email:</strong> <span id="profileEmail"></span></p>
+    <p><strong>Contact:</strong> <span id="profileContact"></span></p>
+    <p><strong>CNIC:</strong> <span id="profileCNIC"></span></p>
+  </div>
+  <div class="menu">
+
+    <a href="#"><i class="fas fa-key"></i> Change Password</a>
+    <a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>
+  </div>
+</div>
+
+<!-- Layout -->
+<div class="main">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2>Applicant Portal</h2>
+    <nav>
+      <ul>
+        <li class="active"><a href="#" onclick="showSection('dashboardSection')"><i class="fas fa-home"></i> Dashboard</a></li>
+        <li class="expandable">
+            <a href="#" class="main-link" onclick="toggleExpand(this)">
+              <i class="fas fa-list-check"></i> Application
+              <i class="fas fa-chevron-down arrow"></i>
+            </a>
+            <ul class="expandable-content">
+              <li><a href="#" onclick="showSection('applicationSection')">Create Application</a></li>
+              <li><a href="#" onclick="showSection('viewApplicationSection')">View Application</a></li>
+            </ul>
+          </li>
+        <li><a href="#" onclick="showSection('paymentsSection')"><i class="fas fa-file-invoice-dollar"></i> Fee Challan </a></li>
+        <li><a href="#" onclick="showSection('helpSection')"><i class="fas fa-circle-question"></i> Help & Support</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Workspace -->
+  <main class="workspace">
+
+    <!-- DASHBOARD -->
+    <section id="dashboardSection" class="page-section active">
+      <div class="card notification-bar">
+        <h3>Latest Notifications</h3>
+        <marquee scrollamount="4">
+          🎉 Welcome to all newly admitted students | 📅 Fee submission deadline: 20th August 2025
+        </marquee>
+      </div>
+
+     <div class="procedure-section">
+      <h2>Admission Procedure</h2>
+      <p style="color: #8b0000;margin-bottom: 16px;"><b>
+         To apply, create an application, upload documents, fill in all required info, and submit the challan. 
+        You can then view your admission status, and once admitted, you will be notified via email or the portal. 
+      </b></p>
+      <div class="procedure-steps">
+        
+        <!-- Step 1 -->
+        <div class="step-card">
+          <h3>1. Application</h3>
+          <p>Fill out and complete your application form here.</p>
+          <button class="action-btn" onclick="showSection('applicationSection')">Create Application</button>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step-card">
+          <h3>2. Challan</h3>
+          <p>Download the challan provided by the admin and pay the fee.</p>
+          <button class="action-btn" onclick="showSection('paymentsSection')">View Challan</button>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step-card">
+          <h3>3. Application Status</h3>
+          <p>View your Application Status</p>
+          <button class="action-btn" onclick="showSection('viewApplicationSection')">View Application </button>
+        </div>
+
+      </div>
+    </div>
+
+      <div class="card">
+        <h2>About Deshani Scholars School</h2>
+        <p>Deshani Scholars School is committed to providing high-quality education in a nurturing environment, encouraging students to reach their full potential academically and personally.</p>
+        <div class="image-section">
+                  <img clas="img1" src="/assets/deshani.jpg"   onclick="openLightbox(this.src)"></img>
+                  <img clas="img1" src="/assets/deshani2.jpg" onclick="openLightbox(this.src)" ></img>
+                  <img clas="img1" src="/assets/deshani3.jpg"  onclick="openLightbox(this.src)" ></img>
+                  <img clas="img1" src="/assets/deshani4.jpg"  onclick="openLightbox(this.src)" ></img>
+                  <img clas="img1" src="/assets/deshani5.jpg"  onclick="openLightbox(this.src)" ></img>
+                  <img clas="img1" src="/assets/deshani6.jpg"  onclick="openLightbox(this.src)" ></img>
+                  <img clas="img1" src="/assets/deshani7.jpg"  onclick="openLightbox(this.src)" ></img>
+         </div>
+      </div>
+    </section>
+<!-- APPLICATION (Wizard) -->
+<section id="applicationSection" class="page-section">
+  <div class="card">
+    <h2>Admission Application</h2>
+    <!-- step pills -->
+    <div id="appPills" class="progress-steps" style="margin-bottom:10px;"></div>
+    <div class="progress-bar-wrap"><div id="appProgressBar" class="progress-bar"></div></div>
+  </div>
+
+
+<!-- STEP 1: Applying Class -->
+<div id="step1" class="card step-pane">
+  <h3>Step 1: Applying Class</h3>
+  
+  <label style="font-weight:600;margin-bottom:10px;display:block">Applying For Class</label>
+
+  <!-- Class Selection Cards -->
+  <div class="categories">
+    <div class="category-card" data-group="preprimary">
+      <h4>Pre-Primary</h4>
+      <p>Nursery & KG</p>
+      <div class="class-list">
+        <div class="class-chip" data-value="Nursery">Nursery</div>
+        <div class="class-chip" data-value="KG-1">KG-1</div>
+        <div class="class-chip" data-value="KG-2">KG-2</div>
+      </div>
+    </div>
+    <div class="category-card" data-group="primary">
+      <h4>Primary</h4>
+      <p>Classes 1–5</p>
+      <div class="class-list">
+        <div class="class-chip" data-value="1">Class 1</div>
+        <div class="class-chip" data-value="2">Class 2</div>
+        <div class="class-chip" data-value="3">Class 3</div>
+        <div class="class-chip" data-value="4">Class 4</div>
+        <div class="class-chip" data-value="5">Class 5</div>
+      </div>
+    </div>
+    <div class="category-card" data-group="middle">
+      <h4>Middle</h4>
+      <p>Classes 6–8</p>
+      <div class="class-list">
+        <div class="class-chip" data-value="6">Class 6</div>
+        <div class="class-chip" data-value="7">Class 7</div>
+        <div class="class-chip" data-value="8">Class 8</div>
+      </div>
+    </div>
+    <div class="category-card" data-group="high">
+      <h4>High</h4>
+      <p>Classes 9–12</p>
+      <div class="class-list">
+        <div class="class-chip" data-value="9">Class 9</div>
+        <div class="class-chip" data-value="10">Class 10</div>
+        <div class="class-chip" data-value="11">Class 11</div>
+        <div class="class-chip" data-value="12">Class 12</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hidden field to capture selection (replaces <select>) -->
+  <input type="hidden" id="apply_class">
+  <div class="btn-row">
+    <button class="btn primary" onclick="saveStep(1)">Save & Continue</button>
+  </div>
+</div>
+
+  <!-- STEP 2: Personal -->
+  <div id="step2" class="card step-pane hidden">
+    <h3>Step 2: Personal Information</h3>
+    <div class="avatar-upload" style="margin:10px 0 18px">
+      <img id="liveAvatar" src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Preview">
+      <label class="pick">
+        <input id="avatarInput" type="file" accept="image/*">
+        <i class="fas fa-upload"></i> Upload Profile Photo
+      </label>
+      <span class="small">PNG/JPG up to ~2MB</span>
+    </div>
+
+    <div class="form-grid">
+      <div class="field col-6">
+        <label>Full Name</label>
+        <input id="p_fullname" type="text" placeholder="Enter your name">
+      </div>
+      <div class="field col-3" style="width: 272px;">
+        <label>Gender</label>
+        <select id="p_gender">
+          <option value="">Select</option>
+          <option>Male</option>
+          <option>Female</option>
+          <option>Other</option>
+        </select>
+      </div>
+     <div class="field col-3" style="width: 272px;">
+        <label>Mother Tongue</label>
+        <select id="p_mother_tongue">
+          <option value="">Select</option>
+          <option>Urdu</option>
+          <option>English</option>
+          <option>Punjabi</option>
+          <option>Pashto</option>
+          <option>Sindhi</option>
+          <option>Balochi</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="field col-3" style="width: 272px;">
+        <label>Date of Birth</label>
+        <input id="p_dob" type="date">
+      </div>
+      <div class="field col-6">
+        <label>B-Form</label>
+        <input id="p_cnic" type="text" placeholder="35202-1234567-8">
+      </div>
+      <div class="field col-6">
+        <label>Contact</label>
+        <input id="p_phone" type="tel" placeholder="0300-1234567">
+      </div>
+      <div class="field col-12">
+        <label>Address</label>
+        <textarea id="p_address" placeholder="House #, Street, City"></textarea>
+      </div>
+      <div class="field col-6">
+        <label>Email (from login)</label>
+        <input id="p_email" type="email" disabled value="amber@example.com">
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn ghost" onclick="goToStep(1)">Back</button>
+      <button class="btn primary" onclick="saveStep(2)">Save & Continue</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: Education -->
+  <div id="step3" class="card step-pane hidden">
+    <h3>Step 3: Educational Information</h3>
+    <div class="form-grid">
+      <div class="field col-6">
+        <label>Current Level</label>
+        <select id="e_level">
+          <option value="">Select level</option>
+          <option>Primary</option><option>Middle</option>
+          <option>Secondary</option><option>Higher Secondary</option>
+        </select>
+      </div>
+      <div class="field col-6">
+        <label>Previous School</label>
+        <input id="e_prev_school" type="text" placeholder="School name">
+      </div>
+      <div class="field col-3">
+        <label>Years Attended</label>
+        <input id="e_years" type="text" placeholder="e.g. 2021-2024">
+      </div>
+      <div class="field col-3">
+        <label>Last Grade / Marks</label>
+        <input id="e_grade" type="text" placeholder="A / 85%">
+      </div>
+      <div class="field col-12">
+        <label>Upload Last Marksheet</label>
+        <input id="e_marksheet" type="file" accept=".jpg,.png,.pdf">
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn ghost" onclick="goToStep(2)">Back</button>
+      <button class="btn primary" onclick="saveStep(3)">Save & Continue</button>
+    </div>
+  </div>
+
+  <!-- STEP 4: Guardians + Siblings -->
+  <div id="step4" class="card step-pane hidden">
+    <h3>Step 4: Guardian & Sibling Information</h3>
+    <div class="form-grid">
+      <div class="field col-6"><label>Guardian Name</label><input id="g_name" type="text"></div>
+      <div class="field col-3"><label>Relation</label>
+        <select id="g_relation"><option value="">Select</option><option>Father</option><option>Mother</option><option>Other</option></select>
+      </div>
+      <div class="field col-3"><label>CNIC</label><input id="g_cnic" type="text"></div>
+      <div class="field col-6"><label>Contact</label><input id="g_contact" type="tel"></div>
+      <div class="field col-6"><label>Occupation</label><input id="g_job" type="text"></div>
+    </div>
+
+    <div style="margin:14px 0 6px;display:flex;justify-content:space-between;align-items:center">
+      <h4>Siblings</h4>
+      <button class="btn gray" onclick="addSiblingRow()">+ Add Sibling</button>
+    </div>
+    <table class="table" id="siblingsTable">
+      <thead><tr><th>Name</th><th>Class</th><th class="action">Action</th></tr></thead>
+      <tbody></tbody>
+    </table>
+
+    <div class="btn-row">
+      <button class="btn ghost" onclick="goToStep(3)">Back</button>
+      <button class="btn primary" onclick="saveStep(4)">Save & Finish</button>
+    </div>
+  </div>
+</section>
+
+    <!-- Notices -->
+    <section id="messagesSection" class="page-section">
+      <div class="card">
+        <h2>Notices</h2>
+        <p>No new notices right now.</p>
+      </div>
+    </section>
+    <!-- Payments -->
+    <section id="paymentsSection" class="page-section">
+      <div class="card">
+        <h2>Payment History</h2>
+        <p>You have no payments on record yet.</p>
+      </div>
+    </section>
+    <!-- Help -->
+    <section id="helpSection" class="page-section">
+      <div class="card">
+        <h2>Help & Support</h2>
+        <p>Email: support@deshani.edu.pk</p>
+      </div>
+    </section>
+    
+    <!-- VIEW APPLICATION -->
+    <section id="viewApplicationSection" class="page-section">
+      <div class="card">
+        <h2>View Application</h2>
+        <p>Your submitted applications will appear here.</p>
+        <!-- later you can load data dynamically -->
+      </div>
+    </section>
+
+<!-- WhatsApp Floating Button -->
+<a href="https://wa.me/923179369176" class="whatsapp-float" target="_blank" title="Chat with us on WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+  </main>
+     <!-- Lightbox  -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+      <img id="lightbox-img" src="">
+      <span class="close-btn" onclick="closeLightbox()">&times;</span>
+    </div>
+</div>
+
+<script src="/script.js">
+
+</script>
+
+
+</script>
+</body>
+</html>
